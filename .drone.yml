@@ -21,3 +21,13 @@ steps:
         - drone-publish.rancher.io
       event:
         - tag
+
+  - name:
+    image: briandowns/trivy-debian:latest
+    commands:
+      - trivy --severity HIGH,CRITICAL --ignore-unfixed briandowns/kubernetes-image-building:${DRONE_TAG}-linux-amd64
+    when:
+      instance:
+        - drone-publish.rancher.io
+      event:
+        - tag
